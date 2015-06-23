@@ -18,7 +18,7 @@ BSP  = tiny6410
 TEXTBASE = 0x00008000
 
 # cross compile
-CROSS_COMPILE  = arm-none-eabi
+CROSS_COMPILE  = arm-linux
 TOOLCHAIN_PATH = /e/yagarto-tools
 
 CC      = $(CROSS_COMPILE)-gcc

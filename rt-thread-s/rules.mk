@@ -13,13 +13,17 @@
 # */
 
 ARCH = arm
-CPU  = s3c6410
-BSP  = tiny6410
+CPU  = s3c24x0
+#s3c24x0
+#s3c6410
+BSP  = mini2440
+#mini2440
+#tiny6410
 TEXTBASE = 0x00008000
 
 # cross compile
 CROSS_COMPILE  = arm-linux
-TOOLCHAIN_PATH = /e/yagarto-tools
+TOOLCHAIN_PATH = 
 
 CC      = $(CROSS_COMPILE)-gcc
 LD      = $(CROSS_COMPILE)-ld
@@ -42,6 +46,7 @@ P_PTHREAD = $(TOPDIR)/components/pthread
 P_FINSH   = $(TOPDIR)/components/finsh
 P_DFS     = $(TOPDIR)/components/dfs
 P_GUI     = $(TOPDIR)/components/rtgui
+P_NET     = $(TOPDIR)/components/net/lwip/src
 
 INCARCH   = $(P_ARCH)
 INCBSP    = $(P_BSP)
@@ -51,6 +56,7 @@ INCPTHREAD= $(P_PTHREAD)
 INCFINSH  = $(P_FINSH)
 INCDFS    = $(P_DFS)/include
 INCGUI    = $(P_GUI)/include
+INCNET    = $(P_NET)/include
 
 LIBARCH   = $(TOPDIR)/lib$(CPU).a
 LIBBSP    = $(TOPDIR)/lib$(BSP).a
@@ -60,6 +66,8 @@ LIBPTHREAD= $(TOPDIR)/libpthread.a
 LIBFINSH  = $(TOPDIR)/libfinsh.a
 LIBDFS    = $(TOPDIR)/libdfs.a
 LIBGUI    = $(TOPDIR)/librtgui.a
+LIBNET    = $(TOPDIR)/libnet.a
+
 TARGET    = $(TOPDIR)/rtt-$(BSP)
 
 # compile flags

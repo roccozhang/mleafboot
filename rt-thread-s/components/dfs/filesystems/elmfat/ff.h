@@ -84,9 +84,7 @@ typedef struct {
 	BYTE	fsi_flag;		/* fsinfo dirty flag (1:must be written back) */
 	WORD	id;				/* File system mount ID */
 	WORD	n_rootdir;		/* Number of root directory entries (FAT12/16) */
-#if _MAX_SS != 512
 	WORD	ssize;			/* Bytes per sector (512,1024,2048,4096) */
-#endif
 #if _FS_REENTRANT
 	_SYNC_t	sobj;			/* Identifier of sync object */
 #endif
@@ -209,6 +207,7 @@ FRESULT f_lseek (FIL*, DWORD);						/* Move file pointer of a file object */
 FRESULT f_close (FIL*);								/* Close an open file object */
 FRESULT f_opendir (DIR*, const TCHAR*);				/* Open an existing directory */
 FRESULT f_readdir (DIR*, FILINFO*);					/* Read a directory item */
+FRESULT f_seekdir(DIR *dj, int offset);				/* Seek in directory */
 FRESULT f_stat (const TCHAR*, FILINFO*);			/* Get file status */
 FRESULT f_write (FIL*, const void*, UINT, UINT*);	/* Write data to a file */
 FRESULT f_getfree (const TCHAR*, DWORD*, FATFS**);	/* Get number of free clusters on the drive */

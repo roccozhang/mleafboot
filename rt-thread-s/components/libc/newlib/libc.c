@@ -1,14 +1,18 @@
 #include <rtthread.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/fcntl.h>
+#include <fcntl.h>
 #include <sys/time.h>
 #include "libc.h"
 
+#ifdef RT_USING_PTHREADS
+#include <pthread.h>
+#endif
+
 void libc_system_init(const char* tty_name)
 {
+#ifdef RT_USING_DFS
 	int fd;
-	extern int pthread_system_init(void);
 
 #ifndef RT_USING_DFS_DEVFS
 #error Please enable devfs by defining RT_USING_DFS_DEVFS in rtconfig.h
@@ -21,6 +25,7 @@ void libc_system_init(const char* tty_name)
 	fd = open("/dev/console", O_RDONLY, 0);	/* for stdin */
 	fd = open("/dev/console", O_WRONLY, 0);	/* for stdout */
 	fd = open("/dev/console", O_WRONLY, 0);	/* for stderr */
+#endif
 
 	/* set PATH and HOME */
 	putenv("PATH=/");

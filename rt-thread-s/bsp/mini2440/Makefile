@@ -3,7 +3,7 @@ CURDIR := $(shell pwd)
 TOPDIR  = $(CURDIR)/../..
 include $(TOPDIR)/rules.mk
 
-INCDIR  = . $(INCARCH) $(INCSYS) $(INCBSP) $(INCLIBC) $(INCFINSH) $(INCDFS) $(INCGUI) $(INCNET)\
+INCDIR  = . $(INCARCH) $(INCSYS) $(INCBSP) $(INCLIBC) $(INCFINSH) $(INCDFS) $(INCGUI) $(INCNET) $(INCNETIPV4) $(INCNETSRC) $(INCNETARCH)\
 		  $(INCDFS)/../filesystems/romfs
 INCLUDE = $(foreach dir, $(INCDIR), -I$(dir))
 

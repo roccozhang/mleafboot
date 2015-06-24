@@ -57,6 +57,9 @@ INCFINSH  = $(P_FINSH)
 INCDFS    = $(P_DFS)/include
 INCGUI    = $(P_GUI)/include
 INCNET    = $(P_NET)/include
+INCNETIPV4= $(P_NET)/include/ipv4
+INCNETSRC = $(P_NET)
+INCNETARCH = $(P_NET)/arch/include
 
 LIBARCH   = $(TOPDIR)/lib$(CPU).a
 LIBBSP    = $(TOPDIR)/lib$(BSP).a
@@ -65,7 +68,7 @@ LIBC      = $(TOPDIR)/libc.a
 LIBPTHREAD= $(TOPDIR)/libpthread.a
 LIBFINSH  = $(TOPDIR)/libfinsh.a
 LIBDFS    = $(TOPDIR)/libdfs.a
-LIBGUI    = $(TOPDIR)/librtgui.a
+#LIBGUI    = $(TOPDIR)/librtgui.a
 LIBNET    = $(TOPDIR)/libnet.a
 
 TARGET    = $(TOPDIR)/rtt-$(BSP)

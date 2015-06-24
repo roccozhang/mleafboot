@@ -57,7 +57,11 @@
 / Locale and Namespace Configurations
 /----------------------------------------------------------------------------*/
 
-#define _CODE_PAGE	936
+#ifdef RT_DFS_ELM_CODE_PAGE
+#    define _CODE_PAGE	RT_DFS_ELM_CODE_PAGE
+#else
+#    define _CODE_PAGE	936
+#endif
 /* The _CODE_PAGE specifies the OEM code page to be used on the target system.
 /  Incorrect setting of the code page can cause a file open failure.
 /
@@ -90,9 +94,9 @@
 */
 
 
-#ifdef RT_DFS_ELM_USE_LFN
-#define _USE_LFN RT_DFS_ELM_USE_LFN
-#define _MAX_LFN RT_DFS_ELM_MAX_LFN
+#if RT_DFS_ELM_USE_LFN
+#define _USE_LFN 	RT_DFS_ELM_USE_LFN
+#define _MAX_LFN 	RT_DFS_ELM_MAX_LFN
 #else
 #define	_USE_LFN	0		/* 0 to 3 */
 #define	_MAX_LFN	255		/* Maximum LFN length to handle (12 to 255) */
@@ -159,8 +163,11 @@
 / it can mount only first primaly partition. When it is set to 1, each volume
 / is tied to the partitions listed in VolToPart[]. */
 
-
+#ifdef RT_DFS_ELM_USE_ERASE
+#define _USE_ERASE	1
+#else
 #define	_USE_ERASE	0	/* 0:Disable or 1:Enable */
+#endif
 /* To enable sector erase feature, set _USE_ERASE to 1. CTRL_ERASE_SECTOR command
 /  should be added to the disk_ioctl functio. */
 
@@ -191,7 +198,7 @@
 /  windows.h, ucos_ii.h and semphr.h, must be included prior to ff.h. */
 
 #ifdef RT_DFS_ELM_REENTRANT
-#define _FS_REENTRANT	RT_DFS_ELM_REENTRANT			/* 0 or 1 */
+#define _FS_REENTRANT	1		/* 0 or 1 */
 #else
 #define _FS_REENTRANT	0		/* 0:Disable or 1:Enable */
 #endif

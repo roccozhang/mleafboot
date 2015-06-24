@@ -582,24 +582,24 @@ extern "C" {
 
 struct rt_hw_register
 {
-	rt_uint32_t r0;
-	rt_uint32_t r1;
-	rt_uint32_t r2;
-	rt_uint32_t r3;
-	rt_uint32_t r4;
-	rt_uint32_t r5;
-	rt_uint32_t r6;
-	rt_uint32_t r7;
-	rt_uint32_t r8;
-	rt_uint32_t r9;
-	rt_uint32_t r10;
-	rt_uint32_t fp;
-	rt_uint32_t ip;
-	rt_uint32_t sp;
-	rt_uint32_t lr;
-	rt_uint32_t pc;
-	rt_uint32_t cpsr;
-	rt_uint32_t ORIG_r0;
+	unsigned int r0;
+	unsigned int r1;
+	unsigned int r2;
+	unsigned int r3;
+	unsigned int r4;
+	unsigned int r5;
+	unsigned int r6;
+	unsigned int r7;
+	unsigned int r8;
+	unsigned int r9;
+	unsigned int r10;
+	unsigned int fp;
+	unsigned int ip;
+	unsigned int sp;
+	unsigned int lr;
+	unsigned int pc;
+	unsigned int cpsr;
+	unsigned int ORIG_r0;
 };
 
 #ifdef __cplusplus

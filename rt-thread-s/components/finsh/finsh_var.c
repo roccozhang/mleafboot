@@ -1,15 +1,32 @@
 /*
- * File      : finsh_var.c
- * This file is part of RT-Thread RTOS
- * COPYRIGHT (C) 2006 - 2010, RT-Thread Development Team
+ *  Variable implementation in finsh shell.
  *
- * The license and distribution terms for this file may be
- * found in the file LICENSE in this distribution or at
- * http://www.rt-thread.org/license/LICENSE
+ * COPYRIGHT (C) 2006 - 2013, RT-Thread Development Team
+ *
+ *  This file is part of RT-Thread (http://www.rt-thread.org)
+ *  Maintainer: bernard.xiong <bernard.xiong at gmail.com>
+ *
+ *  All rights reserved.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program; if not, write to the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  * Change Logs:
  * Date           Author       Notes
  * 2010-03-22     Bernard      first version
+ * 2012-04-27     Bernard      fixed finsh_var_delete issue which
+ *                             is found by Grissiom.
  */
 #include <finsh.h>
 #include "finsh_var.h"
@@ -58,7 +75,7 @@ int finsh_var_delete(const char* name)
 
 	for (i = 0; i < FINSH_VARIABLE_MAX; i ++)
 	{
-		if (strncpy(global_variable[i].name, name, FINSH_NAME_MAX) == 0)
+		if (strncmp(global_variable[i].name, name, FINSH_NAME_MAX) == 0)
 			break;
 	}
 
@@ -87,7 +104,6 @@ struct finsh_var* finsh_var_lookup(const char* name)
 }
 
 #ifdef RT_USING_HEAP
-extern char *strdup(const char *s);
 void finsh_sysvar_append(const char* name, u_char type, void* var_addr)
 {
 	/* create a sysvar */
@@ -97,7 +113,7 @@ void finsh_sysvar_append(const char* name, u_char type, void* var_addr)
 	if (item != NULL)
 	{
 		item->next = NULL;
-		item->sysvar.name = strdup(name);
+		item->sysvar.name = rt_strdup(name);
 		item->sysvar.type = type;
 		item->sysvar.var = var_addr;
 
@@ -108,7 +124,7 @@ void finsh_sysvar_append(const char* name, u_char type, void* var_addr)
 		else
 		{
 			item->next = global_sysvar_list;
-			global_sysvar_list->next = item;
+			global_sysvar_list = item;
 		}
 	}
 }
@@ -119,7 +135,9 @@ struct finsh_sysvar* finsh_sysvar_lookup(const char* name)
 	struct finsh_sysvar* index;
 	struct finsh_sysvar_item* item;
 
-	for (index = _sysvar_table_begin; index < _sysvar_table_end; index ++)
+	for (index = _sysvar_table_begin;
+	     index < _sysvar_table_end;
+	     FINSH_NEXT_SYSVAR(index))
 	{
 		if (strcmp(index->name, name) == 0)
 			return index;

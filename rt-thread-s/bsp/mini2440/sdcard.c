@@ -13,14 +13,14 @@
  * 2010-01-01     Bernard     Modify for mini2440
  * 2012-12-15     amr168      support SDHC
  */
-
+#include <s3c24x0.h>
 #include "sdcard.h"
-
-extern rt_uint32_t PCLK;
-volatile rt_uint32_t rd_cnt;
-volatile rt_uint32_t wt_cnt;
-volatile rt_int32_t RCA;
-volatile rt_int32_t sd_type;
+#include <rtthread.h>
+extern unsigned int PCLK;
+volatile unsigned int rd_cnt;
+volatile unsigned int wt_cnt;
+volatile unsigned int RCA;
+volatile unsigned int sd_type;
 
 static void sd_delay(rt_uint32_t ms)
 {

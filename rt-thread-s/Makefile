@@ -16,7 +16,7 @@ CURDIR := $(shell pwd)
 TOPDIR  = $(CURDIR)
 include $(TOPDIR)/rules.mk
 
-INCDIR  = . $(INCARCH) $(INCSYS) $(INCBSP) $(INCLIBC) $(INCPTHREAD) $(INCFINSH) $(INCDFS) $(INCGUI) \
+INCDIR  = . $(INCARCH) $(INCSYS) $(INCBSP) $(INCLIBC) $(INCPTHREAD) $(INCFINSH) $(INCDFS) $(INCGUI) $(INCNET) $(INCNETIPV4) $(INCNETSRC) $(INCNETARCH)\
           $(INCDFS)/../filesystems/romfs
 INCLUDE = $(foreach dir, $(INCDIR), -I$(dir))
 
@@ -55,8 +55,16 @@ SRC_FINSH_S   = $(wildcard $(P_FINSH)/*.S)
 OBJ_FINSH_C   = $(SRC_FINSH_C:.c=.o)
 OBJ_FINSH_S   = $(SRC_FINSH_S:.S=.o)
 
+SRC_NET_C   = $(wildcard $(P_NET)/api/*.c) $(wildcard $(P_NET)/arch/*.c) \
+			  $(wildcard $(P_NET)/core/*.c) $(wildcard $(P_NET)/netif/*.c) $(wildcard $(P_NET)/core/ipv4/*.c)
+SRC_NET_S   = $(wildcard $(P_NET)/api/*.S) $(wildcard $(P_NET)/arch/*.S) \
+			  $(wildcard $(P_NET)/core/*.S) $(wildcard $(P_NET)/netif/*.S) $(wildcard $(P_NET)/core/ipv4/*.S)
+OBJ_NET_C   = $(SRC_NET_C:.c=.o)
+OBJ_NET_S   = $(SRC_NET_S:.S=.o)
+
+
 SRC_DFS_C   = $(wildcard $(P_DFS)/src/*.c) $(wildcard $(P_DFS)/filesystems/devfs/*.c) \
-                $(wildcard $(P_DFS)/filesystems/elmfat/*.c) $(wildcard $(P_DFS)/filesystems/romfs/*.c) 
+                $(wildcard $(P_DFS)/filesystems/elmfat/*.c) $(wildcard $(P_DFS)/filesystems/romfs/*.c) $(wildcard $(P_DFS)/filesystems/elmfat/option/*.c)
 SRC_DFS_S   = $(wildcard $(P_DFS)/src/*.S) $(wildcard $(P_DFS)/filesystems/devfs/*.S) \
                 $(wildcard $(P_DFS)/filesystems/elmfat/*.S) $(wildcard $(P_DFS)/filesystems/romfs/*.S)
 OBJ_DFS_C   = $(SRC_DFS_C:.c=.o)
@@ -71,7 +79,7 @@ OBJ_GUI_S   = $(SRC_GUI_S:.S=.o)
 #$(OBJ_GUI_C) $(OBJ_GUI_S) $(OBJ_PTHREAD_C) $(OBJ_PTHREAD_S) -Map $(TARGET).map
 
 OBJ     = $(OBJ_ARCH_C) $(OBJ_ARCH_S) $(OBJ_BSP_C) $(OBJ_BSP_S) $(OBJ_SYS_C) $(OBJ_SYS_S) \
-            $(OBJ_LIBC_C) $(OBJ_LIBC_S) $(OBJ_FINSH_C) $(OBJ_FINSH_S) \
+            $(OBJ_LIBC_C) $(OBJ_LIBC_S) $(OBJ_FINSH_C) $(OBJ_FINSH_S) $(OBJ_NET_C) $(OBJ_NET_S) \
             $(OBJ_DFS_C) $(OBJ_DFS_S)
 OBJ_COM = $(SRC_COM:.c=.o)
 

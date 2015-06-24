@@ -19,17 +19,19 @@
 
 #if !defined (RT_USING_NEWLIB) && defined (RT_USING_MINILIBC)
 int atoi(const char *nptr);
-#endif
-
-#define malloc  rt_malloc
-#define free    rt_free
-#define realloc rt_realloc
-#define calloc  rt_calloc
+long int atol(const char *nptr);
 
 int rand(void);
 int rand_r(unsigned int *seed);
 void srand(unsigned int seed);
 
 void qsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *));
+
+void *malloc(size_t size);
+void free(void *ptr);
+void *realloc(void *ptr, size_t size);
+void *calloc(size_t nelem, size_t elsize);
+void abort(void);
+#endif
 
 #endif
